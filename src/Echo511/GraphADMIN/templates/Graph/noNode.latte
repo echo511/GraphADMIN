@@ -1,0 +1,16 @@
+{block #content}
+<div class="container">
+	<div class="row">
+		<h1>Input search:</h1>
+		{form getNodeForm, class => 'form'}
+			{input label, placeholder => 'Label', class => 'form-control node-hint'}
+			<br />
+			{input get, class => 'btn btn-success pull-right col-lg-3'}
+		{/form}
+	</div>
+	<div class="row">
+		<div id="sigmajs" class="col-lg-12">
+		</div>
+	</div>
+</div>
+{/block}

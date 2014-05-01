@@ -1,0 +1,52 @@
+{block #title}
+{$node->getLabel()} | {include #parent}
+{/block}
+
+{block #content}
+<div class="container">
+	<div class="row">
+		<div class="get-node col-lg-4">
+			{form getNodeForm, class => 'form-inline get-node'}
+				{input label, placeholder => 'Label', class => 'form-control node-hint get-node-label'}
+				{input get, value => 'Get', class => 'btn btn-primary'}
+			{/form}
+		</div>
+		<div class="create-edge col-lg-8">
+			{form createEdgeForm, class => 'form-inline'}
+				{input source, placeholder => $node->getLabel(), class => 'form-control node-hint'}
+				{input label, placeholder => 'Label', class => 'form-control'}
+				{input target, placeholder => $node->getLabel(), class => 'form-control node-hint'}
+				{input create, value => 'Create', class => 'btn btn-success'}
+			{/form}
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="node-info col-lg-4">
+			<h1><a href="#" class="node-label" data-url="{link ChangeNodeLabelOrDelete!}" data-type="text" data-pk="{$node->getId()}">{$node->getLabel()}</a></h1>
+			<div n:foreach="$node->getProperties() as $property => $value">
+				<strong>{$property|firstUpper}:</strong>
+				<br />
+				<a href="#" class="node-label" data-url="{link ChangeNodeProperty!}" data-type="text" data-name="{$property}" data-pk="{$node->getId()}">{$value}</a>
+			</div>
+		</div>
+		<div class="node-edges col-lg-8">
+			<div n:foreach="$node->getEdges() as $edge">
+				{include #node-link, target => $edge->getSource()}
+				<a href="#" class="edge-label" data-url="{link ChangeEdgeLabelOrDelete!}" data-type="text" data-pk="{$edge->getId()}">{$edge->getLabel()}</a>
+				{include #node-link, target => $edge->getTarget()}
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12 sigmajs">
+			{control sigmajs}
+		</div>
+	</div>
+</div>
+{/block}
+
+{define #node-link, target => $target}
+<a n:class="$target->getLabel() == $node->getLabel() ? main-node : related-node" n:href="node, nodeLabel => $target->getLabel()">{$target->getLabel()}</a>
+{/define}

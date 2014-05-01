@@ -1,0 +1,17 @@
+<div id="sigmajs{$name}" class="sigmajs"></div>
+
+<script type="text/javascript">
+	$(function() {
+		sigma.parsers.json({link GetData!}, {
+			container: 'sigmajs{$name|noescape}',
+			settings: {
+				defaultNodeColor: '#ec5148',
+				minNodeSize: 8,
+				maxNodeSize: 16
+			}
+		}, function(s) {
+			s.startForceAtlas2()
+		});
+
+	});
+</script>
