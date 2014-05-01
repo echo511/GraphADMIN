@@ -16,5 +16,8 @@
 		"tharos/leanmapper": "dev-develop"
 	},
 	"require-dev": {
+	},
+	"autoload": {
+		"classmap": ["src/"]
 	}
 }
