@@ -8,6 +8,10 @@ use Echo511\GraphADMIN\LeanMapper\EntityFactory;
 use Echo511\GraphADMIN\LeanMapper\Repository\NodeRepository as LMNodeRepository;
 use Nette\Object;
 
+/**
+ * Node repository. Proxy class for LeanMapper internal repository.
+ * @author Nikolas Tsiongas
+ */
 class NodeRepository extends Object implements INodeRepository
 {
 
@@ -49,6 +53,13 @@ class NodeRepository extends Object implements INodeRepository
 	public function getByLabelTypehint($label)
 	{
 		return $this->repository->getByLabelTypehint($label);
+	}
+
+
+
+	public function getRandom()
+	{
+		return $this->repository->getRandom();
 	}
 
 

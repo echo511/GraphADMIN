@@ -6,8 +6,12 @@ use Echo511\GraphADMIN\INode;
 use Echo511\GraphADMIN\LeanMapper\Loader\EdgesLoader;
 use Echo511\GraphADMIN\LeanMapper\ResultProxy\EdgesResultProxy;
 use LeanMapper\Entity;
+use LeanMapper\Row;
 
 /**
+ * Node implementation.
+ * @author Nikolas Tsiongas
+ * 
  * @property int $id
  * @property string $label
  * @property string $type
@@ -20,6 +24,10 @@ class Node extends Entity implements INode
 	/** @var EdgesLoader */
 	private $edgesLoader;
 
+	/**
+	 * @param Row|null $arg
+	 * @param EdgesLoader $edgesLoader
+	 */
 	public function __construct($arg = null, EdgesLoader $edgesLoader)
 	{
 		parent::__construct($arg);
@@ -30,14 +38,14 @@ class Node extends Entity implements INode
 
 	public function getId()
 	{
-		return $this->row->id;
+		return $this->get('id');
 	}
 
 
 
 	public function getLabel()
 	{
-		return $this->row->label;
+		return $this->get('label');
 	}
 
 
@@ -61,7 +69,7 @@ class Node extends Entity implements INode
 
 	public function getProperty($property)
 	{
-		return $this->row->$property;
+		return $this->get($property);
 	}
 
 
@@ -80,14 +88,14 @@ class Node extends Entity implements INode
 
 	public function setLabel($label)
 	{
-		$this->row->label = $label;
+		$this->set('label', $label);
 	}
 
 
 
 	public function setProperty($property, $value)
 	{
-		$this->row->$property = $value;
+		$this->set($property, $value);
 	}
 
 

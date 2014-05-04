@@ -2,6 +2,10 @@
 
 namespace Echo511\GraphADMIN;
 
+/**
+ * Edge in the graph.
+ * @author Nikolas Tsiongas
+ */
 interface IEdge
 {
 
@@ -16,13 +20,16 @@ interface IEdge
 
 	/** @return string */
 	function getLabel();
-	
+
 	/** @return string */
 	function getType();
-	
+
+	/** @param string $label */
 	function setLabel($label);
-	
+
+	/** @param INode $source */
 	function setSource(INode $source);
-	
+
+	/** @param INode $target */
 	function setTarget(INode $target);
 }

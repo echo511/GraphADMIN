@@ -2,27 +2,22 @@
 
 namespace Echo511\GraphADMIN;
 
+/**
+ * Edge repository.
+ * @author Nikolas Tsiongas
+ */
 interface IEdgeRepository
 {
 
-	/**
-	 * Create new instance of Edge. Does not store in DB.
-	 * @return IEdge
-	 */
+	/** @return IEdge */
 	function createInstance();
 
-	/**
-	 * @return IEdge
-	 */
+	/** @return IEdge */
 	function getById($id);
 
-	/**
-	 * Store Edge in DB or update changes.
-	 */
+	/** @param IEdge $edge */
 	function persist(IEdge $edge);
 
-	/**
-	 * Remove Edge from DB.
-	 */
+	/** @param IEdge $edge */
 	function delete(IEdge $edge);
 }

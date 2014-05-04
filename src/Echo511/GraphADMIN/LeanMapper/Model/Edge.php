@@ -6,6 +6,9 @@ use Echo511\GraphADMIN\IEdge;
 use LeanMapper\Entity;
 
 /**
+ * Edge implementation.
+ * @author Nikolas Tsiongas
+ * 
  * @property int $id
  * @property string $label
  * @property string $type

@@ -4,6 +4,10 @@ namespace Echo511\GraphADMIN;
 
 use Echo511\GraphADMIN\Controls\SigmaJS;
 
+/**
+ * Graph facade interface.
+ * @author Nikolas Tsiongas
+ */
 interface IGraph
 {
 

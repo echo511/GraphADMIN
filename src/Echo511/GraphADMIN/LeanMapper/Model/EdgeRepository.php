@@ -5,9 +5,14 @@ namespace Echo511\GraphADMIN\LeanMapper\Model;
 use Echo511\GraphADMIN\IEdge;
 use Echo511\GraphADMIN\IEdgeRepository;
 use Echo511\GraphADMIN\LeanMapper\EntityFactory;
+use Echo511\GraphADMIN\LeanMapper\Repository\EdgeRepository;
 use Echo511\GraphADMIN\LeanMapper\Repository\EdgeRepository as LMEdgeRepository;
 use Nette\Object;
 
+/**
+ * Edge repository. Proxy class for LeanMapper internal repository.
+ * @author Nikolas Tsiongas
+ */
 class EdgeRepository extends Object implements IEdgeRepository
 {
 
@@ -17,6 +22,10 @@ class EdgeRepository extends Object implements IEdgeRepository
 	/** @var LMEdgeRepository */
 	private $repository;
 
+	/**
+	 * @param EdgeRepository $repository
+	 * @param EntityFactory $entityFactory
+	 */
 	public function __construct(LMEdgeRepository $repository, EntityFactory $entityFactory)
 	{
 		$this->entityFactory = $entityFactory;

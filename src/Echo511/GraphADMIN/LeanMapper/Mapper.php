@@ -4,6 +4,10 @@ namespace Echo511\GraphADMIN\LeanMapper;
 
 use LeanMapper\DefaultMapper;
 
+/**
+ * LeanMapper mapper.
+ * @author Nikolas Tsiongas
+ */
 class Mapper extends DefaultMapper
 {
 

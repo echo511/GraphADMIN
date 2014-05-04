@@ -6,13 +6,25 @@ use Echo511\GraphADMIN\IEdge;
 use Echo511\GraphADMIN\INode;
 use Nette\Application\UI\Control;
 
+/**
+ * Render SigmaJS graph.
+ * @author Nikolas Tsiongas
+ */
 class SigmaJS extends Control
 {
 
-	/** @var array */
+	/**
+	 * Callback.
+	 * Return color hex. Argument INode.
+	 * @var array
+	 */
 	public $onNodeColor;
 
-	/** @var array */
+	/**
+	 * Callback.
+	 * Return color hex. Argument IEdge.
+	 * @var array
+	 */
 	public $onEdgeColor;
 
 	/** @var INode[] */
@@ -21,6 +33,10 @@ class SigmaJS extends Control
 	/** @var IEdge[] */
 	private $edges = array();
 
+	/**
+	 * Mark node for rendering.
+	 * @param INode $node
+	 */
 	public function drawNode(INode $node)
 	{
 		$this->nodes[$node->id] = $node;
@@ -28,6 +44,10 @@ class SigmaJS extends Control
 
 
 
+	/**
+	 * Mark nodes for rendering.
+	 * @param INode[] $nodes
+	 */
 	public function drawNodes($nodes)
 	{
 		foreach ($nodes as $node) {
@@ -37,6 +57,10 @@ class SigmaJS extends Control
 
 
 
+	/**
+	 * Mark edge for rendering.
+	 * @param IEdge $edge
+	 */
 	public function drawEdge(IEdge $edge)
 	{
 		$this->edges[$edge->getId()] = $edge;
@@ -44,6 +68,10 @@ class SigmaJS extends Control
 
 
 
+	/**
+	 * Mark edges for rendering.
+	 * @param IEdge[] $edges
+	 */
 	public function drawEdges($edges)
 	{
 		foreach ($edges as $edge) {
@@ -53,6 +81,9 @@ class SigmaJS extends Control
 
 
 
+	/**
+	 * Respond with JSON to fill sigma graph.
+	 */
 	public function handleGetData()
 	{
 		$result['nodes'] = array();
@@ -61,8 +92,8 @@ class SigmaJS extends Control
 			$count++;
 			$result['nodes'][$count]['id'] = (string) $node->getId();
 			$result['nodes'][$count]['label'] = $node->getLabel();
-			$result['nodes'][$count]['x'] = $count % 10;
-			$result['nodes'][$count]['y'] = floor($count / 10);
+			$result['nodes'][$count]['x'] = rand(0, 15);
+			$result['nodes'][$count]['y'] = rand(0, 15);
 			$result['nodes'][$count]['size'] = $this->getNodeSize($node);
 			$result['nodes'][$count]['color'] = $this->getNodeColor($node);
 		}
@@ -82,6 +113,9 @@ class SigmaJS extends Control
 
 
 
+	/**
+	 * Render component.
+	 */
 	public function render()
 	{
 		$this->template->setFile(__DIR__ . '/sigmajs.latte');
@@ -91,6 +125,10 @@ class SigmaJS extends Control
 
 
 
+	/**
+	 * @param INode $node
+	 * @return int
+	 */
 	private function getNodeSize(INode $node)
 	{
 		return 1;
@@ -98,6 +136,10 @@ class SigmaJS extends Control
 
 
 
+	/**
+	 * @param INode $node
+	 * @return string
+	 */
 	private function getNodeColor(INode $node)
 	{
 		$color = $this->onNodeColor($node);
@@ -106,6 +148,10 @@ class SigmaJS extends Control
 
 
 
+	/**
+	 * @param IEdge $edge
+	 * @return string
+	 */
 	private function getEdgeColor(IEdge $edge)
 	{
 		$color = $this->onEdgeColor($edge);

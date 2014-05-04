@@ -10,6 +10,7 @@ use Nette\Application\UI\Presenter;
 
 /**
  * Graph presenter.
+ * @author Nikolas Tsiongas
  */
 class GraphPresenter extends Presenter
 {
@@ -35,6 +36,10 @@ class GraphPresenter extends Presenter
 
 
 
+	/**
+	 * Response with JSON for Twitter's typeahead.
+	 * @param string $label
+	 */
 	public function handleNodeTypehint($label)
 	{
 		$typehint = array();
@@ -48,13 +53,9 @@ class GraphPresenter extends Presenter
 
 
 
-	public function handleSigmaJS()
-	{
-		$this->sendJson($this->graph->sigmaJS($this->node));
-	}
-
-
-
+	/**
+	 * Process X-editable call.
+	 */
 	public function handleChangeNodeLabelOrDelete()
 	{
 		$id = $this->getHttpRequest()->getPost('pk');
@@ -72,6 +73,9 @@ class GraphPresenter extends Presenter
 
 
 
+	/**
+	 * Process X-editable call.
+	 */
 	public function handleChangeNodeProperty()
 	{
 		$id = $this->getHttpRequest()->getPost('pk');
@@ -82,6 +86,9 @@ class GraphPresenter extends Presenter
 
 
 
+	/**
+	 * Process X-editable call.
+	 */
 	public function handleChangeEdgeLabelOrDelete()
 	{
 		$id = $this->getHttpRequest()->getPost('pk');
@@ -103,6 +110,11 @@ class GraphPresenter extends Presenter
 
 
 
+	/**
+	 * Search or create node.
+	 * @param string $name
+	 * @return Form
+	 */
 	public function createComponentGetNodeForm($name)
 	{
 		$form = new Form($this, $name);
@@ -119,6 +131,11 @@ class GraphPresenter extends Presenter
 
 
 
+	/**
+	 * Create edge between two nodes.
+	 * @param string $name
+	 * @return Form
+	 */
 	public function createComponentCreateEdgeForm($name)
 	{
 		$form = new Form($this, $name);
@@ -139,6 +156,11 @@ class GraphPresenter extends Presenter
 
 
 
+	/**
+	 * Render SigmaJS graph
+	 * @param string $name
+	 * @return SigmaJS
+	 */
 	public function createComponentSigmajs($name)
 	{
 		$sigmajs = new SigmaJS($this, $name);

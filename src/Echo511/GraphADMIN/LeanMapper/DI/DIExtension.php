@@ -4,6 +4,10 @@ namespace Echo511\GraphADMIN\LeanMapper\DI;
 
 use Nette\DI\CompilerExtension;
 
+/**
+ * Add LeanMapper GraphADMIN database driver to Nette DI container.
+ * @author Nikolas Tsiongas
+ */
 class LeanMapperExtension extends CompilerExtension
 {
 

@@ -9,6 +9,10 @@ use Echo511\GraphADMIN\INode;
 use Echo511\GraphADMIN\INodeRepository;
 use Nette\Object;
 
+/**
+ * Facade for GraphPresenter.
+ * @author Nikolas Tsiongas
+ */
 class GraphFacade extends Object implements IGraph
 {
 
@@ -18,6 +22,10 @@ class GraphFacade extends Object implements IGraph
 	/** @var INodeRepository */
 	private $nodeRepository;
 
+	/**
+	 * @param IEdgeRepository $edgeRepository
+	 * @param INodeRepository $nodeRepository
+	 */
 	public function __construct(IEdgeRepository $edgeRepository, INodeRepository $nodeRepository)
 	{
 		$this->edgeRepository = $edgeRepository;
@@ -108,6 +116,7 @@ class GraphFacade extends Object implements IGraph
 
 	public function sigmaJS(SigmaJS $sigmajs, INode $node = null, $iterationLeft = 2)
 	{
+		$node = $node === null ? $this->getRandomNode() : $node;
 		$sigmajs->drawNode($node);
 		if ($iterationLeft > 0) {
 			$sigmajs->drawEdges($node->getEdges());
@@ -116,6 +125,13 @@ class GraphFacade extends Object implements IGraph
 				$this->sigmaJS($sigmajs, $edge->getTarget(), $iterationLeft - 1);
 			}
 		}
+	}
+
+
+
+	protected function getRandomNode()
+	{
+		return $this->nodeRepository->getRandom();
 	}
 
 

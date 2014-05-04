@@ -8,6 +8,11 @@ use LeanMapper\Result;
 use LeanMapper\ResultProxy;
 use Nette\Object;
 
+/**
+ * Preload edges for nodes in NotORM style.
+ * @author Nikolas Tsiongas
+ * @author Vojtěch Kohout Supplied solution for preloading edges. https://github.com/Tharos/LeanMapper/issues/53
+ */
 class EdgesLoader extends Object
 {
 
@@ -35,13 +40,13 @@ class EdgesLoader extends Object
 		foreach ($resultProxy as $node) {
 			$nodesIds[$node['id']] = true;
 		}
-		
+
 		$edges = $this->connection->select('*')
 			->from('edge')
 			->where('[source] IN %in OR [target] IN %in', $ids = array_keys($nodesIds), $ids)
 			->orderBy('type')
 			->fetchAll();
-		
+
 		$referencing = Result::createInstance(array(), 'edge', $this->connection, $this->mapper);
 		foreach ($edges as $edge) {
 			if (isset($nodesIds[$edge['source']]) || isset($nodesIds[$edge['target']])) {

@@ -2,6 +2,10 @@
 
 namespace Echo511\GraphADMIN;
 
+/**
+ * Node in the graph.
+ * @author Nikolas Tsiongas
+ */
 interface INode
 {
 
@@ -10,7 +14,7 @@ interface INode
 
 	/** @return string */
 	function getLabel();
-	
+
 	function getType();
 
 	/** @return string */
@@ -25,7 +29,12 @@ interface INode
 	 */
 	function getEdges();
 
+	/** @param string $label */
 	function setLabel($label);
-	
+
+	/**
+	 * @param string $property
+	 * @param string $value
+	 */
 	function setProperty($property, $value);
 }
