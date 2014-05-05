@@ -60,4 +60,10 @@ interface IGraph
 	 * @return array
 	 */
 	function sigmaJS(SigmaJS $sigmajs, INode $node = null, $depth = 2);
+
+	/**
+	 * Export all nodes and edges in any format.
+	 * @return array [format] => ..., [content] => ...
+	 */
+	function export();
 }

@@ -15,6 +15,9 @@ class GraphADMINExtension extends CompilerExtension
 	{
 		$this->containerBuilder->addDefinition($this->prefix('graphFacade'))
 			->setClass('Echo511\GraphADMIN\Facade\GraphFacade');
+
+		$this->containerBuilder->addDefinition($this->prefix('backup_jsonExporter'))
+			->setClass('Echo511\GraphADMIN\Backup\JsonExporter');
 	}
 
 

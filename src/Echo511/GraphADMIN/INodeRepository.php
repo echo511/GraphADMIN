@@ -11,6 +11,9 @@ interface INodeRepository
 
 	/** @return INode */
 	function createInstance();
+	
+	/** @return INode[] */
+	function getAll();
 
 	/** @return INode */
 	function getById($id);

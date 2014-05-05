@@ -36,6 +36,13 @@ class NodeRepository extends Object implements INodeRepository
 
 
 
+	public function getAll()
+	{
+		return $this->repository->getAll();
+	}
+
+
+
 	public function getById($id)
 	{
 		return $this->repository->getById($id);

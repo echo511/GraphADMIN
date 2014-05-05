@@ -12,6 +12,9 @@ interface IEdgeRepository
 	/** @return IEdge */
 	function createInstance();
 
+	/** @return IEdge[] */
+	function getAll();
+
 	/** @return IEdge */
 	function getById($id);
 

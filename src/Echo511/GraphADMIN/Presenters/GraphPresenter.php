@@ -5,6 +5,7 @@ namespace Echo511\GraphADMIN\Presenters;
 use Echo511\GraphADMIN\Controls\SigmaJS;
 use Echo511\GraphADMIN\IGraph;
 use Echo511\GraphADMIN\INode;
+use Nette\Application\Responses\TextResponse;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
 
@@ -99,6 +100,20 @@ class GraphPresenter extends Presenter
 		} else {
 			$this->graph->changeEdgeLabel($id, $label);
 		}
+	}
+
+
+
+	public function handleExportAll()
+	{
+		$export = $this->graph->export();
+		$name = date('Y-m-d-H-i-s') . '_' . $this->getHttpRequest()->getUrl()->getHost() . '_graph-dump.' . $export['format'];
+		$content = $export['content'];
+
+		$this->getHttpResponse()->setContentType('text/plain');
+		$this->getHttpResponse()->setHeader('Content-Disposition', 'attachment; filename="' . $name . '"');
+		$this->getHttpResponse()->setHeader('Content-Length', strlen($content));
+		$this->sendResponse(new TextResponse($content));
 	}
 
 

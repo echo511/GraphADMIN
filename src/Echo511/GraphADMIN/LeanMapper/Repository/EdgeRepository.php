@@ -11,6 +11,14 @@ use LeanMapper\Repository;
 class EdgeRepository extends Repository
 {
 
+	public function getAll()
+	{
+		$rows = $this->createFluent()->fetchAll();
+		return $this->createEntities($rows);
+	}
+
+
+
 	public function getById($id)
 	{
 		$row = $this->createFluent()->where('id = ?', $id)->fetch();
