@@ -5,7 +5,6 @@ namespace Echo511\GraphADMIN\LeanMapper\Model;
 use Echo511\GraphADMIN\IEdge;
 use Echo511\GraphADMIN\IEdgeRepository;
 use Echo511\GraphADMIN\LeanMapper\EntityFactory;
-use Echo511\GraphADMIN\LeanMapper\Repository\EdgeRepository;
 use Echo511\GraphADMIN\LeanMapper\Repository\EdgeRepository as LMEdgeRepository;
 use Nette\Object;
 
