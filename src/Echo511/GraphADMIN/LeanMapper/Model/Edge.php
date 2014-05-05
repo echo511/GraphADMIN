@@ -10,9 +10,9 @@ use LeanMapper\Entity;
  * @author Nikolas Tsiongas
  * 
  * @property int $id
- * @property string $label
- * @property string $type
- * @property string $description
+ * @property string|null $label
+ * @property string|null $type
+ * @property string|null $description
  * @property Node $source m:hasOne(source)
  * @property Node $target m:hasOne(target)
  */

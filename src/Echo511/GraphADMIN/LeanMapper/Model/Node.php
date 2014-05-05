@@ -14,8 +14,8 @@ use LeanMapper\Row;
  * 
  * @property int $id
  * @property string $label
- * @property string $type
- * @property string $description
+ * @property string|null $type
+ * @property string|null $description
  * @property Edge[] $edges m:belongsToMany(related_node)
  */
 class Node extends Entity implements INode
