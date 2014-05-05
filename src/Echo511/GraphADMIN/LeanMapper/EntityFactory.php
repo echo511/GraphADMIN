@@ -46,7 +46,7 @@ class EntityFactory extends Object implements IEntityFactory
 	 */
 	public function createEntity($entityClass, $arg = null)
 	{
-		return $this->container->createInstance($entityClass, !is_array($arg) && !is_null($arg) ? array($arg) : $arg);
+		return $this->container->createInstance($entityClass, !is_array($arg) ? array($arg) : $arg);
 	}
 
 
