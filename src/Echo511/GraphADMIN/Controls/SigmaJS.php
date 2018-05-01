@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN\Controls;
 
@@ -16,22 +16,23 @@ class SigmaJS extends Control
 	/**
 	 * Callback.
 	 * Return color hex. Argument INode.
-	 * @var array
+	 * @var callable[]
 	 */
-	public $onNodeColor;
+	public $onNodeColor = [];
 
 	/**
 	 * Callback.
 	 * Return color hex. Argument IEdge.
-	 * @var array
+	 * @var callable[]
 	 */
-	public $onEdgeColor;
+	public $onEdgeColor = [];
 
 	/** @var INode[] */
-	private $nodes = array();
+	private $nodes = [];
 
 	/** @var IEdge[] */
-	private $edges = array();
+	private $edges = [];
+
 
 	/**
 	 * Mark node for rendering.
@@ -39,9 +40,8 @@ class SigmaJS extends Control
 	 */
 	public function drawNode(INode $node)
 	{
-		$this->nodes[$node->id] = $node;
+		$this->nodes[$node->getId()] = $node;
 	}
-
 
 
 	/**
@@ -56,7 +56,6 @@ class SigmaJS extends Control
 	}
 
 
-
 	/**
 	 * Mark edge for rendering.
 	 * @param IEdge $edge
@@ -65,7 +64,6 @@ class SigmaJS extends Control
 	{
 		$this->edges[$edge->getId()] = $edge;
 	}
-
 
 
 	/**
@@ -80,13 +78,12 @@ class SigmaJS extends Control
 	}
 
 
-
 	/**
 	 * Respond with JSON to fill sigma graph.
 	 */
 	public function handleGetData()
 	{
-		$result['nodes'] = array();
+		$result['nodes'] = [];
 		$count = -1;
 		foreach ($this->nodes as $key => $node) {
 			$count++;
@@ -98,7 +95,7 @@ class SigmaJS extends Control
 			$result['nodes'][$count]['color'] = $this->getNodeColor($node);
 		}
 
-		$result['edges'] = array();
+		$result['edges'] = [];
 		$count = -1;
 		foreach ($this->edges as $key => $edge) {
 			$count++;
@@ -112,7 +109,6 @@ class SigmaJS extends Control
 	}
 
 
-
 	/**
 	 * Render component.
 	 */
@@ -122,7 +118,6 @@ class SigmaJS extends Control
 		$this->template->name = $this->name;
 		$this->template->render();
 	}
-
 
 
 	/**
@@ -135,17 +130,17 @@ class SigmaJS extends Control
 	}
 
 
-
 	/**
 	 * @param INode $node
 	 * @return string
 	 */
 	private function getNodeColor(INode $node)
 	{
-		$color = $this->onNodeColor($node);
-		return $color !== null ? $color : '#fff';
+		$formatting = new Formatting();
+		$formatting->setColor('#fff');
+		$this->onNodeColor($node, $formatting);
+		return $formatting->getColor();
 	}
-
 
 
 	/**
@@ -154,10 +149,11 @@ class SigmaJS extends Control
 	 */
 	private function getEdgeColor(IEdge $edge)
 	{
-		$color = $this->onEdgeColor($edge);
-		return $color !== null ? $color : '#fff';
+		$formatting = new Formatting();
+		$formatting->setColor('#fff');
+		$this->onEdgeColor($edge, $formatting);
+		return $formatting->getColor();
 	}
-
 
 
 }

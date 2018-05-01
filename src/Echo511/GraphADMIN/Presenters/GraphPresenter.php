@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN\Presenters;
 
@@ -16,7 +16,7 @@ use Nette\Application\UI\Presenter;
 class GraphPresenter extends Presenter
 {
 
-	/** @var string @persistent */
+	/** @var string|NULL @persistent */
 	public $nodeLabel;
 
 	/** @var IGraph @inject */
@@ -25,16 +25,16 @@ class GraphPresenter extends Presenter
 	/** @var INode */
 	private $node;
 
+
 	public function startup()
 	{
 		parent::startup();
-		if ($this->nodeLabel === null) {
+		if ($this->nodeLabel === NULL) {
 			$this->setView('noNode');
 		} else {
 			$this->node = $this->graph->getNode($this->nodeLabel);
 		}
 	}
-
 
 
 	/**
@@ -43,7 +43,7 @@ class GraphPresenter extends Presenter
 	 */
 	public function handleNodeTypehint($label)
 	{
-		$typehint = array();
+		$typehint = [];
 		$count = -1;
 		foreach ($this->graph->nodeTypehint($label) as $node) {
 			$count++;
@@ -51,7 +51,6 @@ class GraphPresenter extends Presenter
 		}
 		$this->sendJson($typehint);
 	}
-
 
 
 	/**
@@ -63,7 +62,7 @@ class GraphPresenter extends Presenter
 		$label = $this->getHttpRequest()->getPost('value');
 		if ($label == 'DELETE!') {
 			$this->graph->deleteNode($id);
-			$this->nodeLabel = null;
+			$this->nodeLabel = NULL;
 			$this->redirect('this');
 		} else {
 			$this->graph->changeNodeLabel($id, $label);
@@ -71,7 +70,6 @@ class GraphPresenter extends Presenter
 			$this->redirect('this');
 		}
 	}
-
 
 
 	/**
@@ -84,7 +82,6 @@ class GraphPresenter extends Presenter
 		$value = $this->getHttpRequest()->getPost('value');
 		$this->graph->changeNodeProperty($id, $property, $value);
 	}
-
 
 
 	/**
@@ -103,7 +100,6 @@ class GraphPresenter extends Presenter
 	}
 
 
-
 	public function handleExportAll()
 	{
 		$export = $this->graph->export();
@@ -117,12 +113,10 @@ class GraphPresenter extends Presenter
 	}
 
 
-
 	public function renderNode()
 	{
 		$this->template->node = $this->node;
 	}
-
 
 
 	/**
@@ -145,7 +139,6 @@ class GraphPresenter extends Presenter
 	}
 
 
-
 	/**
 	 * Create edge between two nodes.
 	 * @param string $name
@@ -161,7 +154,9 @@ class GraphPresenter extends Presenter
 
 		if ($form->isSuccess()) {
 			$this->graph->createEdge(
-				$form['source']->isFilled() ? $form['source']->value : $this->node->getLabel(), $form['target']->isFilled() ? $form['target']->value : $this->node->getLabel(), $form['label']->value
+				$form['source']->isFilled() ? $form['source']->value : $this->node->getLabel(),
+				$form['target']->isFilled() ? $form['target']->value : $this->node->getLabel(),
+				$form['label']->value
 			);
 			$this->redirect('this');
 		}
@@ -170,27 +165,26 @@ class GraphPresenter extends Presenter
 	}
 
 
-
-	/**
-	 * Render SigmaJS graph
-	 * @param string $name
-	 * @return SigmaJS
-	 */
-	public function createComponentSigmajs($name)
+	public function createComponentSigmajs(): SigmaJS
 	{
-		$sigmajs = new SigmaJS($this, $name);
-		$this->graph->sigmaJS($sigmajs, $this->node, 1);
-		$sigmajs->onNodeColor = function ($node) {
+		$sigmaJS = new SigmaJS();
+		$this->graph->sigmaJS($sigmaJS, $this->node, 1);
+		$sigmaJS->onNodeColor[] = function ($node, $formatting): void {
+			if (!$formatting instanceof \Echo511\GraphADMIN\Controls\Formatting) {
+				throw new \InvalidArgumentException();
+			}
+
 			switch ($node->getType()) {
 				case 'Artérie':
-					return '#ff5151';
+					$formatting->setColor('#ff5151');
+					break;
 				case 'Kloub':
-					return '#926239';
+					$formatting->setColor('#926239');
+					break;
 			}
 		};
-		return $sigmajs;
+		return $sigmaJS;
 	}
-
 
 
 }

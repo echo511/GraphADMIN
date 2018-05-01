@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN;
 
@@ -9,27 +9,37 @@ namespace Echo511\GraphADMIN;
 interface INodeRepository
 {
 
-	/** @return INode */
-	function createInstance();
-	
-	/** @return INode[] */
-	function getAll();
 
 	/** @return INode */
-	function getById($id);
+	public function createInstance();
 
-	/** @return INode */
-	function getByLabel($label);
 
 	/** @return INode[] */
-	function getByLabelTypehint($label);
+	public function getAll();
+
 
 	/** @return INode */
-	function getRandom();
+	public function getById($id);
+
+
+	/** @return INode|FALSE */
+	public function getByLabel($label);
+
+
+	/** @return INode[] */
+	public function getByLabelTypehint($label);
+
+
+	/** @return INode */
+	public function getRandom();
+
 
 	/** @param INode $node */
-	function persist(INode $node);
+	public function persist(INode $node);
+
 
 	/** @param INode $node */
-	function delete(INode $node);
+	public function delete(INode $node);
+
+
 }

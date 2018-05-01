@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN\LeanMapper\Repository;
 
@@ -11,6 +11,7 @@ use LeanMapper\Repository;
 class EdgeRepository extends Repository
 {
 
+
 	public function getAll()
 	{
 		$rows = $this->createFluent()->fetchAll();
@@ -18,18 +19,16 @@ class EdgeRepository extends Repository
 	}
 
 
-
 	public function getById($id)
 	{
 		$row = $this->createFluent()->where('id = ?', $id)->fetch();
 
 		if (!$row) {
-			return false;
+			return FALSE;
 		}
 
 		return $this->createEntity($row);
 	}
-
 
 
 }

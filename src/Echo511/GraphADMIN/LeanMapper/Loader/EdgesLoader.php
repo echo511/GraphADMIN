@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN\LeanMapper\Loader;
 
@@ -6,14 +6,13 @@ use LeanMapper\Connection;
 use LeanMapper\IMapper;
 use LeanMapper\Result;
 use LeanMapper\ResultProxy;
-use Nette\Object;
 
 /**
  * Preload edges for nodes in NotORM style.
  * @author Nikolas Tsiongas
  * @author Vojtěch Kohout Supplied solution for preloading edges. https://github.com/Tharos/LeanMapper/issues/53
  */
-class EdgesLoader extends Object
+class EdgesLoader
 {
 
 	/** @var Connection */
@@ -21,6 +20,7 @@ class EdgesLoader extends Object
 
 	/** @var IMapper */
 	private $mapper;
+
 
 	/**
 	 * @param Connection $connection
@@ -33,12 +33,11 @@ class EdgesLoader extends Object
 	}
 
 
-
 	public function preloadEdges(ResultProxy $resultProxy)
 	{
-		$nodesIds = array();
+		$nodesIds = [];
 		foreach ($resultProxy as $node) {
-			$nodesIds[$node['id']] = true;
+			$nodesIds[$node['id']] = TRUE;
 		}
 
 		$edges = $this->connection->select('*')
@@ -47,13 +46,13 @@ class EdgesLoader extends Object
 			->orderBy('type')
 			->fetchAll();
 
-		$referencing = Result::createInstance(array(), 'edge', $this->connection, $this->mapper);
+		$referencing = Result::createInstance([], 'edge', $this->connection, $this->mapper);
 		foreach ($edges as $edge) {
 			if (isset($nodesIds[$edge['source']]) || isset($nodesIds[$edge['target']])) {
 				$edge = $edge->toArray();
 				$edge['related_node'] = $edge['source'];
 				$referencing->addDataEntry($edge);
-				if ($edge['target'] !== $edge['source'] and $edge['target'] !== null) {
+				if ($edge['target'] !== $edge['source'] and $edge['target'] !== NULL) {
 					$edge['related_node'] = $edge['target'];
 					$referencing->addDataEntry($edge);
 				}
@@ -62,7 +61,6 @@ class EdgesLoader extends Object
 		$referencing->cleanAddedAndRemovedMeta();
 		$resultProxy->setReferencingResult($referencing, 'edge', 'related_node');
 	}
-
 
 
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN\LeanMapper;
 
@@ -6,17 +6,17 @@ use LeanMapper\Entity;
 use LeanMapper\IEntityFactory;
 use LeanMapper\Row;
 use Nette\DI\Container;
-use Nette\Object;
 
 /**
  * Create entity via Nette container.
  * @author Nikolas Tsiongas
  */
-class EntityFactory extends Object implements IEntityFactory
+class EntityFactory  implements IEntityFactory
 {
 
 	/** @var Container */
 	private $container;
+
 
 	/**
 	 * @param Container $container
@@ -25,7 +25,6 @@ class EntityFactory extends Object implements IEntityFactory
 	{
 		$this->container = $container;
 	}
-
 
 
 	/**
@@ -38,17 +37,15 @@ class EntityFactory extends Object implements IEntityFactory
 	}
 
 
-
 	/**
 	 * @param string $entityClass
-	 * @param Row|null $arg
+	 * @param Row|array|null $arg
 	 * @return Entity
 	 */
-	public function createEntity($entityClass, $arg = null)
+	public function createEntity($entityClass, $arg = NULL)
 	{
-		return $this->container->createInstance($entityClass, !is_array($arg) ? array($arg) : $arg);
+		return $this->container->createInstance($entityClass, !is_array($arg) ? [$arg] : $arg);
 	}
-
 
 
 }

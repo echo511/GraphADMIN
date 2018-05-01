@@ -1,18 +1,18 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN\Backup;
 
 use Echo511\GraphADMIN\IEdge;
 use Echo511\GraphADMIN\IExporter;
 use Echo511\GraphADMIN\INode;
-use Nette\Object;
 
 /**
  * Export given nodes and edges as json.
  * @author Nikolas Tsiongas
  */
-class JsonExporter extends Object implements IExporter
+class JsonExporter implements IExporter
 {
+
 
 	/**
 	 * @param INode[] $nodes
@@ -20,7 +20,7 @@ class JsonExporter extends Object implements IExporter
 	 */
 	public function export($nodes, $edges)
 	{
-		$result = array();
+		$result = [];
 		foreach ($nodes as $node) {
 			$result['nodes'][$node->getId()]['id'] = $node->getId();
 			$result['nodes'][$node->getId()]['label'] = $node->getLabel();
@@ -41,12 +41,10 @@ class JsonExporter extends Object implements IExporter
 	}
 
 
-
 	public function getExportFormat()
 	{
 		return 'json';
 	}
-
 
 
 }

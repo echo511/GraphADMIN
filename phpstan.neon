@@ -1,0 +1,7 @@
+includes:
+	- vendor/phpstan/phpstan-nette/extension.neon
+	- vendor/phpstan/phpstan-nette/rules.neon
+
+parameters:
+	ignoreErrors:
+		- '/Parameter #1 \$data of static method LeanMapper\\Result::createInstance\(\) expects Dibi\\Row&iterable<Dibi\\Row>, array given\./'

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN\LeanMapper\Model;
 
@@ -6,13 +6,12 @@ use Echo511\GraphADMIN\IEdge;
 use Echo511\GraphADMIN\IEdgeRepository;
 use Echo511\GraphADMIN\LeanMapper\EntityFactory;
 use Echo511\GraphADMIN\LeanMapper\Repository\EdgeRepository as LMEdgeRepository;
-use Nette\Object;
 
 /**
  * Edge repository. Proxy class for LeanMapper internal repository.
  * @author Nikolas Tsiongas
  */
-class EdgeRepository extends Object implements IEdgeRepository
+class EdgeRepository  implements IEdgeRepository
 {
 
 	/** @var EntityFactory */
@@ -21,16 +20,12 @@ class EdgeRepository extends Object implements IEdgeRepository
 	/** @var LMEdgeRepository */
 	private $repository;
 
-	/**
-	 * @param EdgeRepository $repository
-	 * @param EntityFactory $entityFactory
-	 */
+
 	public function __construct(LMEdgeRepository $repository, EntityFactory $entityFactory)
 	{
 		$this->entityFactory = $entityFactory;
 		$this->repository = $repository;
 	}
-
 
 
 	public function createInstance()
@@ -39,12 +34,10 @@ class EdgeRepository extends Object implements IEdgeRepository
 	}
 
 
-
 	public function getAll()
 	{
 		return $this->repository->getAll();
 	}
-
 
 
 	public function getById($id)
@@ -53,19 +46,22 @@ class EdgeRepository extends Object implements IEdgeRepository
 	}
 
 
-
 	public function persist(IEdge $edge)
 	{
+		if (!$edge instanceof Edge) {
+			throw new \InvalidArgumentException();
+		}
 		$this->repository->persist($edge);
 	}
 
 
-
 	public function delete(IEdge $edge)
 	{
+		if (!$edge instanceof Edge) {
+			throw new \InvalidArgumentException();
+		}
 		$this->repository->delete($edge);
 	}
-
 
 
 }

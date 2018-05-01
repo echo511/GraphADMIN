@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<ruleset name="echo511">
+    <description>Echo511 CS.</description>
+
+    <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/TypeHints/DeclareStrictTypesSniff.php"/>
+
+    <arg name="tab-width" value="4"/>
+    <rule ref="PSR2">
+        <!-- Using tabs instead of spaces. -->
+        <exclude name="Generic.WhiteSpace.DisallowTabIndent"/>
+
+        <!-- Using upper case constants. -->
+        <exclude name="Generic.PHP.LowerCaseConstant"/>
+
+        <!-- Arguments with default values don't have to be at the end. -->
+        <exclude name="PEAR.Functions.ValidDefaultValue"/>
+
+        <!-- Using limit 160 instead of 80. -->
+        <exclude name="Generic.Files.LineLength"/>
+
+        <!-- We use 2 spaces before class end -->
+        <exclude name="PSR2.Classes.ClassDeclaration"/>
+    </rule>
+
+    <!-- Using tabs instead of spaces -->
+    <rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <properties>
+            <property name="indent" value="4"/>
+            <property name="tabIndent" value="true"/>
+        </properties>
+    </rule>
+
+    <!-- Using upper case constants -->
+    <rule ref="Generic.PHP.UpperCaseConstant"/>
+
+    <!-- Line limit 160. -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="80"/>
+            <property name="absoluteLineLimit" value="160"/>
+        </properties>
+    </rule>
+
+    <!-- Allow short arrays only. -->
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found" />
+
+    <!-- Disallow multiple classes with the same name. -->
+    <rule ref="Generic.Classes.DuplicateClassName.Found"/>
+
+    <!-- Only one interface per file. -->
+    <rule ref="Generic.Files.OneInterfacePerFile"/>
+
+    <!-- PHP code MUST use only UTF-8 without BOM. -->
+    <rule ref="Generic.Files.ByteOrderMark"/>
+
+    <!-- PHP code MUST use only UTF-8 without BOM. -->
+    <rule ref="Generic.Formatting.SpaceAfterCast"/>
+
+    <!-- Use <?php only -->
+    <rule ref="Generic.PHP.DisallowShortOpenTag"/>
+
+    <!-- docs -->
+    <rule ref="Squiz.Commenting.DocCommentAlignment"/>
+
+    <!-- classes -->
+    <rule ref="Squiz.Classes.LowercaseClassKeywords"/>
+    <rule ref="Squiz.Classes.ValidClassName"/>
+
+    <!-- no space after opening (Squiz) or before ending (PSR2) a function -->
+    <rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace" />
+
+    <!-- Checks the separation between methods in a class or interface. -->
+    <rule ref="Squiz.WhiteSpace.FunctionSpacing">
+        <properties>
+            <property name="spacing" value="2"/>
+        </properties>
+    </rule>
+
+    <!-- Checks that no whitespace proceeds the first content of the file, exists
+    after the last content of the file, resides after content on any line, or
+    are two empty lines in functions. -->
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace" />
+
+    <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses" />
+
+    <rule ref="Squiz.Classes.ClassFileName" />
+</ruleset>

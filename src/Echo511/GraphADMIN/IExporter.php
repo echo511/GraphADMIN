@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN;
 
@@ -9,11 +9,13 @@ namespace Echo511\GraphADMIN;
 interface IExporter
 {
 
+
 	/**
 	 * Return format of exported string.
 	 * @return string
 	 */
-	function getExportFormat();
+	public function getExportFormat();
+
 
 	/**
 	 * Export nodes and edges.
@@ -21,5 +23,7 @@ interface IExporter
 	 * @param IEdge[] $edges
 	 * @return string
 	 */
-	function export($nodes, $edges);
+	public function export($nodes, $edges);
+
+
 }

@@ -1,0 +1,12 @@
+extensions:
+	graphAdmin: Echo511\GraphADMIN\DI\GraphADMINExtension
+	graphLeanMapper: Echo511\GraphADMIN\LeanMapper\DI\LeanMapperExtension
+
+application:
+	errorPresenter: Error
+	mapping:
+		*: Echo511\GraphADMIN\Presenters\*Presenter
+	scanDirs: false
+
+services:
+	router: Echo511\GraphADMIN\Route\RouterFactory::createRouter

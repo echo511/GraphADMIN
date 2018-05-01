@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN\LeanMapper\Model;
 
@@ -8,7 +8,7 @@ use LeanMapper\Entity;
 /**
  * Edge implementation.
  * @author Nikolas Tsiongas
- * 
+ *
  * @property int $id
  * @property string|null $label
  * @property string|null $type
@@ -19,11 +19,11 @@ use LeanMapper\Entity;
 class Edge extends Entity implements IEdge
 {
 
+
 	public function getId()
 	{
 		return $this->get('id');
 	}
-
 
 
 	public function getLabel()
@@ -32,12 +32,10 @@ class Edge extends Entity implements IEdge
 	}
 
 
-
 	public function getSource()
 	{
 		return $this->get('source');
 	}
-
 
 
 	public function getTarget()
@@ -46,12 +44,10 @@ class Edge extends Entity implements IEdge
 	}
 
 
-
 	public function getType()
 	{
 		return $this->get('type');
 	}
-
 
 
 	public function setLabel($label)
@@ -61,7 +57,6 @@ class Edge extends Entity implements IEdge
 	}
 
 
-
 	public function setSource(\Echo511\GraphADMIN\INode $source)
 	{
 		$this->set('source', $source);
@@ -69,13 +64,11 @@ class Edge extends Entity implements IEdge
 	}
 
 
-
 	public function setTarget(\Echo511\GraphADMIN\INode $target)
 	{
 		$this->set('target', $target);
 		return $this;
 	}
-
 
 
 }

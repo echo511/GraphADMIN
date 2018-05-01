@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN;
 
@@ -9,18 +9,25 @@ namespace Echo511\GraphADMIN;
 interface IEdgeRepository
 {
 
+
 	/** @return IEdge */
-	function createInstance();
+	public function createInstance();
+
 
 	/** @return IEdge[] */
-	function getAll();
+	public function getAll();
+
 
 	/** @return IEdge */
-	function getById($id);
+	public function getById($id);
+
 
 	/** @param IEdge $edge */
-	function persist(IEdge $edge);
+	public function persist(IEdge $edge);
+
 
 	/** @param IEdge $edge */
-	function delete(IEdge $edge);
+	public function delete(IEdge $edge);
+
+
 }

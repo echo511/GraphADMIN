@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN;
 
@@ -9,27 +9,37 @@ namespace Echo511\GraphADMIN;
 interface IEdge
 {
 
+
 	/** @return int */
-	function getId();
+	public function getId();
+
 
 	/** @return INode */
-	function getSource();
+	public function getSource();
+
 
 	/** @return INode */
-	function getTarget();
+	public function getTarget();
+
 
 	/** @return string */
-	function getLabel();
+	public function getLabel();
+
 
 	/** @return string */
-	function getType();
+	public function getType();
+
 
 	/** @param string $label */
-	function setLabel($label);
+	public function setLabel($label);
+
 
 	/** @param INode $source */
-	function setSource(INode $source);
+	public function setSource(INode $source);
+
 
 	/** @param INode $target */
-	function setTarget(INode $target);
+	public function setTarget(INode $target);
+
+
 }

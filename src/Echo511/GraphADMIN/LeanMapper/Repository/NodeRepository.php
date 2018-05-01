@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN\LeanMapper\Repository;
 
@@ -11,6 +11,7 @@ use LeanMapper\Repository;
 class NodeRepository extends Repository
 {
 
+
 	public function getAll()
 	{
 		$rows = $this->createFluent()->fetchAll();
@@ -18,18 +19,16 @@ class NodeRepository extends Repository
 	}
 
 
-
 	public function getById($id)
 	{
 		$row = $this->createFluent()->where('id = ?', $id)->fetch();
 
 		if (!$row) {
-			return false;
+			return FALSE;
 		}
 
 		return $this->createEntity($row);
 	}
-
 
 
 	public function getByLabel($label)
@@ -37,12 +36,11 @@ class NodeRepository extends Repository
 		$row = $this->createFluent()->where('label = ?', $label)->fetch();
 
 		if (!$row) {
-			return false;
+			return FALSE;
 		}
 
 		return $this->createEntity($row);
 	}
-
 
 
 	public function getRandom()
@@ -50,12 +48,11 @@ class NodeRepository extends Repository
 		$row = $this->createFluent()->orderBy('RAND()')->fetch();
 
 		if (!$row) {
-			return false;
+			return FALSE;
 		}
 
 		return $this->createEntity($row);
 	}
-
 
 
 	public function getByLabelTypehint($label)
@@ -63,7 +60,6 @@ class NodeRepository extends Repository
 		$rows = $this->createFluent()->where('label LIKE ?', '%' . implode('%', explode(" ", $label)) . '%')->fetchAll();
 		return $this->createEntities($rows);
 	}
-
 
 
 }

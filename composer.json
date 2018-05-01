@@ -9,15 +9,27 @@
 			"homepage": "http://congi.cz"
 		}
 	],
-	"minimum-stability": "dev",
+	"minimum-stability": "stable",
 	"require": {
-		"php": ">= 5.3.7",
-		"nette/nette": "2.2.*@dev",
-		"tharos/leanmapper": "dev-develop"
+		"php": ">= 7.2",
+		"nette/application": "2.4.*",
+		"nette/bootstrap": "2.4.*",
+		"nette/di": "2.4.*",
+		"nette/forms": "2.4.*",
+		"latte/latte": "2.4.*",
+		"tracy/tracy": "2.4.*",
+		"tharos/leanmapper": "3.2.*"
 	},
 	"require-dev": {
+		"dg/adminer-custom": "dev-master",
+		"squizlabs/php_codesniffer": "^3.2",
+		"phpstan/phpstan": "^0.9.2",
+		"phpstan/phpstan-nette": "^0.9.0",
+		"slevomat/coding-standard": "^4.5"
 	},
 	"autoload": {
-		"classmap": ["src/"]
+		"psr-4": {
+			"Echo511\\GraphADMIN\\": "src/Echo511/GraphADMIN/"
+		}
 	}
 }

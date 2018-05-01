@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN\LeanMapper\Model;
 
@@ -6,13 +6,12 @@ use Echo511\GraphADMIN\INode;
 use Echo511\GraphADMIN\INodeRepository;
 use Echo511\GraphADMIN\LeanMapper\EntityFactory;
 use Echo511\GraphADMIN\LeanMapper\Repository\NodeRepository as LMNodeRepository;
-use Nette\Object;
 
 /**
  * Node repository. Proxy class for LeanMapper internal repository.
  * @author Nikolas Tsiongas
  */
-class NodeRepository extends Object implements INodeRepository
+class NodeRepository  implements INodeRepository
 {
 
 	/** @var EntityFactory */
@@ -21,12 +20,12 @@ class NodeRepository extends Object implements INodeRepository
 	/** @var LMNodeRepository */
 	private $repository;
 
+
 	public function __construct(LMNodeRepository $repository, EntityFactory $entityFactory)
 	{
 		$this->entityFactory = $entityFactory;
 		$this->repository = $repository;
 	}
-
 
 
 	public function createInstance()
@@ -35,12 +34,10 @@ class NodeRepository extends Object implements INodeRepository
 	}
 
 
-
 	public function getAll()
 	{
 		return $this->repository->getAll();
 	}
-
 
 
 	public function getById($id)
@@ -49,12 +46,10 @@ class NodeRepository extends Object implements INodeRepository
 	}
 
 
-
 	public function getByLabel($label)
 	{
 		return $this->repository->getByLabel($label);
 	}
-
 
 
 	public function getByLabelTypehint($label)
@@ -63,26 +58,28 @@ class NodeRepository extends Object implements INodeRepository
 	}
 
 
-
 	public function getRandom()
 	{
 		return $this->repository->getRandom();
 	}
 
 
-
 	public function persist(INode $node)
 	{
+		if (!$node instanceof Node) {
+			throw new \InvalidArgumentException();
+		}
 		$this->repository->persist($node);
 	}
 
 
-
 	public function delete(INode $node)
 	{
+		if (!$node instanceof Node) {
+			throw new \InvalidArgumentException();
+		}
 		$this->repository->delete($node);
 	}
-
 
 
 }

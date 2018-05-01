@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN;
 
@@ -11,59 +11,71 @@ use Echo511\GraphADMIN\Controls\SigmaJS;
 interface IGraph
 {
 
+
 	/**
 	 * Return node by label. If node does not exist create it.
 	 * @return INode
 	 */
-	function getNode($label);
+	public function getNode($label);
+
 
 	/**
 	 * Try to rename node. If duplicity found do NOT merge.
 	 */
-	function changeNodeLabel($id, $label);
+	public function changeNodeLabel($id, $label);
+
 
 	/**
 	 * Delete node by id.
 	 */
-	function deleteNode($id);
+	public function deleteNode($id);
+
 
 	/**
 	 * Change node property by id.
 	 */
-	function changeNodeProperty($id, $property, $value);
+	public function changeNodeProperty($id, $property, $value);
+
 
 	/**
 	 * Create edge between nodes. Use label as reference.
 	 * @return IEdge
 	 */
-	function createEdge($sourceLabel, $targetLabel, $label);
+	public function createEdge($sourceLabel, $targetLabel, $label);
+
 
 	/**
 	 * Change edge label.
 	 */
-	function changeEdgeLabel($id, $label);
+	public function changeEdgeLabel($id, $label);
+
 
 	/**
 	 * Delete edge by id.
 	 */
-	function deleteEdge($id);
+	public function deleteEdge($id);
+
 
 	/**
 	 * Typehint nodes by label.
 	 * @return INode[]
 	 */
-	function nodeTypehint($label);
+	public function nodeTypehint($label);
+
 
 	/**
 	 * Return array for sigma js parser. Give only subsection of graph.
 	 * If node is null then select random.
 	 * @return array
 	 */
-	function sigmaJS(SigmaJS $sigmajs, INode $node = null, $depth = 2);
+	public function sigmaJS(SigmaJS $sigmajs, INode $node = NULL, $depth = 2);
+
 
 	/**
 	 * Export all nodes and edges in any format.
 	 * @return array [format] => ..., [content] => ...
 	 */
-	function export();
+	public function export();
+
+
 }

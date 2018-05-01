@@ -47,6 +47,6 @@
 </div>
 {/block}
 
-{define #node-link, target => $target}
+{define #node-link}
 <a n:class="$target->getLabel() == $node->getLabel() ? main-node : related-node" n:href="node, nodeLabel => $target->getLabel()">{$target->getLabel()}</a>
 {/define}

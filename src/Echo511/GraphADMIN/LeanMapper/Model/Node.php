@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN\LeanMapper\Model;
 
@@ -11,7 +11,7 @@ use LeanMapper\Row;
 /**
  * Node implementation.
  * @author Nikolas Tsiongas
- * 
+ *
  * @property int $id
  * @property string $label
  * @property string|null $type
@@ -24,16 +24,12 @@ class Node extends Entity implements INode
 	/** @var EdgesLoader */
 	private $edgesLoader;
 
-	/**
-	 * @param Row|null $arg
-	 * @param EdgesLoader $edgesLoader
-	 */
-	public function __construct($arg = null, EdgesLoader $edgesLoader)
+
+	public function __construct($arg = NULL, EdgesLoader $edgesLoader)
 	{
 		parent::__construct($arg);
 		$this->edgesLoader = $edgesLoader;
 	}
-
 
 
 	public function getId()
@@ -42,12 +38,10 @@ class Node extends Entity implements INode
 	}
 
 
-
 	public function getLabel()
 	{
 		return $this->get('label');
 	}
-
 
 
 	public function getType()
@@ -56,15 +50,13 @@ class Node extends Entity implements INode
 	}
 
 
-
 	public function getProperties()
 	{
-		return array(
-		    'type' => $this->getProperty('type'),
-		    'description' => $this->getProperty('description'),
-		);
+		return [
+			'type' => $this->getProperty('type'),
+			'description' => $this->getProperty('description'),
+		];
 	}
-
 
 
 	public function getProperty($property)
@@ -73,10 +65,14 @@ class Node extends Entity implements INode
 	}
 
 
-
 	public function getEdges()
 	{
 		$resultProxy = $this->row->getResultProxy(EdgesResultProxy::getClass());
+
+		if (!$resultProxy instanceof EdgesResultProxy) {
+			throw new \InvalidArgumentException();
+		}
+
 		if (!$resultProxy->hasPreloadedEdges()) {
 			$this->edgesLoader->preloadEdges($resultProxy);
 			$resultProxy->markEdgesAsPreloaded();
@@ -85,19 +81,16 @@ class Node extends Entity implements INode
 	}
 
 
-
 	public function setLabel($label)
 	{
 		$this->set('label', $label);
 	}
 
 
-
 	public function setProperty($property, $value)
 	{
 		$this->set($property, $value);
 	}
-
 
 
 }

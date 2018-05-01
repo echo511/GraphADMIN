@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN;
 
@@ -9,32 +9,42 @@ namespace Echo511\GraphADMIN;
 interface INode
 {
 
+
 	/** @return int */
-	function getId();
+	public function getId();
+
 
 	/** @return string */
-	function getLabel();
+	public function getLabel();
 
-	function getType();
+
+	public function getType();
+
 
 	/** @return string */
-	function getProperty($property);
+	public function getProperty($property);
+
 
 	/** @return array */
-	function getProperties();
+	public function getProperties();
+
 
 	/**
 	 * Return edges related or relating to node.
 	 * @return IEdge[]
 	 */
-	function getEdges();
+	public function getEdges();
+
 
 	/** @param string $label */
-	function setLabel($label);
+	public function setLabel($label);
+
 
 	/**
 	 * @param string $property
 	 * @param string $value
 	 */
-	function setProperty($property, $value);
+	public function setProperty($property, $value);
+
+
 }

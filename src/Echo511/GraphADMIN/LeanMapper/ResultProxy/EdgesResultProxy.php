@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Echo511\GraphADMIN\LeanMapper\ResultProxy;
 
@@ -12,16 +12,16 @@ class EdgesResultProxy extends ResultProxy
 {
 
 	/** @var bool */
-	private $hasPreloadedEdges = false;
+	private $hasPreloadedEdges = FALSE;
+
 
 	/**
 	 * Database was queried. Mark as preloaded.
 	 */
 	public function markEdgesAsPreloaded()
 	{
-		$this->hasPreloadedEdges = true;
+		$this->hasPreloadedEdges = TRUE;
 	}
-
 
 
 	/**
@@ -34,7 +34,6 @@ class EdgesResultProxy extends ResultProxy
 	}
 
 
-
 	/**
 	 * @return string
 	 */
@@ -42,7 +41,6 @@ class EdgesResultProxy extends ResultProxy
 	{
 		return get_called_class();
 	}
-
 
 
 }
