@@ -16,6 +16,9 @@ use Nette\Application\UI\Presenter;
 class GraphPresenter extends Presenter
 {
 
+	/** @var int @persistent */
+	public $sigmaJSDepth = 5;
+
 	/** @var string|NULL @persistent */
 	public $nodeLabel;
 
@@ -24,6 +27,20 @@ class GraphPresenter extends Presenter
 
 	/** @var INode */
 	private $node;
+
+	/** @var \Echo511\GraphADMIN\Facade\GraphFacade */
+	private $graphFacade;
+
+
+	/**
+	 * GraphPresenter constructor.
+	 * @param \Echo511\GraphADMIN\Facade\GraphFacade $graphFacade
+	 */
+	public function __construct(\Echo511\GraphADMIN\Facade\GraphFacade $graphFacade)
+	{
+		parent::__construct();
+		$this->graphFacade = $graphFacade;
+	}
 
 
 	public function startup()
@@ -39,9 +56,8 @@ class GraphPresenter extends Presenter
 
 	/**
 	 * Response with JSON for Twitter's typeahead.
-	 * @param string $label
 	 */
-	public function handleNodeTypehint($label)
+	public function handleNodeTypehint($label): void
 	{
 		$typehint = [];
 		$count = -1;
@@ -56,7 +72,7 @@ class GraphPresenter extends Presenter
 	/**
 	 * Process X-editable call.
 	 */
-	public function handleChangeNodeLabelOrDelete()
+	public function handleChangeNodeLabelOrDelete(): void
 	{
 		$id = $this->getHttpRequest()->getPost('pk');
 		$label = $this->getHttpRequest()->getPost('value');
@@ -75,7 +91,7 @@ class GraphPresenter extends Presenter
 	/**
 	 * Process X-editable call.
 	 */
-	public function handleChangeNodeProperty()
+	public function handleChangeNodeProperty(): void
 	{
 		$id = $this->getHttpRequest()->getPost('pk');
 		$property = $this->getHttpRequest()->getPost('name');
@@ -87,7 +103,7 @@ class GraphPresenter extends Presenter
 	/**
 	 * Process X-editable call.
 	 */
-	public function handleChangeEdgeLabelOrDelete()
+	public function handleChangeEdgeLabelOrDelete(): void
 	{
 		$id = $this->getHttpRequest()->getPost('pk');
 		$label = $this->getHttpRequest()->getPost('value');
@@ -121,19 +137,17 @@ class GraphPresenter extends Presenter
 
 	/**
 	 * Search or create node.
-	 * @param string $name
-	 * @return Form
 	 */
-	public function createComponentGetNodeForm($name)
+	public function createComponentGetNodeForm(): Form
 	{
-		$form = new Form($this, $name);
+		$form = new Form();
 		$form->addText('label');
 		$form->addSubmit('get');
 
-		if ($form->isSuccess()) {
+		$form->onSuccess[] = function (Form $form) {
 			$this->nodeLabel = $this->graph->getNode($form['label']->value)->getLabel();
 			$this->redirect('this');
-		}
+		};
 
 		return $form;
 	}
@@ -141,25 +155,23 @@ class GraphPresenter extends Presenter
 
 	/**
 	 * Create edge between two nodes.
-	 * @param string $name
-	 * @return Form
 	 */
-	public function createComponentCreateEdgeForm($name)
+	public function createComponentCreateEdgeForm(): Form
 	{
-		$form = new Form($this, $name);
+		$form = new Form();
 		$form->addText('source');
 		$form->addText('label');
 		$form->addText('target');
 		$form->addSubmit('create');
 
-		if ($form->isSuccess()) {
+		$form->onSuccess[] = function (Form $form) {
 			$this->graph->createEdge(
 				$form['source']->isFilled() ? $form['source']->value : $this->node->getLabel(),
 				$form['target']->isFilled() ? $form['target']->value : $this->node->getLabel(),
 				$form['label']->value
 			);
 			$this->redirect('this');
-		}
+		};
 
 		return $form;
 	}
@@ -168,7 +180,8 @@ class GraphPresenter extends Presenter
 	public function createComponentSigmajs(): SigmaJS
 	{
 		$sigmaJS = new SigmaJS();
-		$this->graph->sigmaJS($sigmaJS, $this->node, 1);
+		$node = $this->node ?? $this->graphFacade->getRandomNode();
+		$this->graph->sigmaJS($sigmaJS, $node, $this->sigmaJSDepth);
 		$sigmaJS->onNodeColor[] = function ($node, $formatting): void {
 			if (!$formatting instanceof \Echo511\GraphADMIN\Controls\Formatting) {
 				throw new \InvalidArgumentException();
@@ -184,6 +197,21 @@ class GraphPresenter extends Presenter
 			}
 		};
 		return $sigmaJS;
+	}
+
+
+	public function createComponentSetSigmaJSDepthForm()
+	{
+		$form = new Form();
+		$form->addInteger('depth', 'Hloubka grafu')
+			->setDefaultValue($this->sigmaJSDepth)
+			->setRequired(TRUE);
+		$form->addSubmit('set');
+		$form->onSuccess[] = function (Form $form, array $values) {
+			$this->sigmaJSDepth = $values['depth'];
+			$this->redirect('this');
+		};
+		return $form;
 	}
 
 

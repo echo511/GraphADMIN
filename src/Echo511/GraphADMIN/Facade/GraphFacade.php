@@ -110,16 +110,16 @@ class GraphFacade implements IGraph
 	}
 
 
-	public function sigmaJS(SigmaJS $sigmajs, INode $node = NULL, $iterationLeft = 2)
+	public function sigmaJS(SigmaJS $sigmaJS, INode $node, $depth = 2, array & $drawnNodesIdsMap = []): void
 	{
-		$node = $node === NULL ? $this->getRandomNode() : $node;
-		if ($node) {
-			$sigmajs->drawNode($node);
-			if ($iterationLeft > 0) {
-				$sigmajs->drawEdges($node->getEdges());
+		if (!\array_key_exists($node->getId(), $drawnNodesIdsMap)) {
+			$drawnNodesIdsMap[$node->getId()] = TRUE;
+			$sigmaJS->drawNode($node);
+			if ($depth > 0) {
+				$sigmaJS->drawEdges($node->getEdges());
 				foreach ($node->getEdges() as $edge) {
-					$this->sigmaJS($sigmajs, $edge->getSource(), $iterationLeft - 1);
-					$this->sigmaJS($sigmajs, $edge->getTarget(), $iterationLeft - 1);
+					$this->sigmaJS($sigmaJS, $edge->getSource(), $depth - 1, $drawnNodesIdsMap);
+					$this->sigmaJS($sigmaJS, $edge->getTarget(), $depth - 1, $drawnNodesIdsMap);
 				}
 			}
 		}
@@ -135,7 +135,7 @@ class GraphFacade implements IGraph
 	}
 
 
-	protected function getRandomNode()
+	public function getRandomNode()
 	{
 		return $this->nodeRepository->getRandom();
 	}

@@ -80,19 +80,25 @@ class SigmaJS extends Control
 
 	/**
 	 * Respond with JSON to fill sigma graph.
+	 *
+	 * Note: $prev is used so SigmaJS force engine renders nodes at the same coordinates
+	 * each time.
 	 */
 	public function handleGetData()
 	{
 		$result['nodes'] = [];
 		$count = -1;
+		$prev = NULL;
 		foreach ($this->nodes as $key => $node) {
+			$prev = $prev ?? $node;
 			$count++;
 			$result['nodes'][$count]['id'] = (string) $node->getId();
 			$result['nodes'][$count]['label'] = $node->getLabel();
-			$result['nodes'][$count]['x'] = rand(0, 15);
-			$result['nodes'][$count]['y'] = rand(0, 15);
+			$result['nodes'][$count]['x'] = $node->getId();
+			$result['nodes'][$count]['y'] = $prev->getId();
 			$result['nodes'][$count]['size'] = $this->getNodeSize($node);
 			$result['nodes'][$count]['color'] = $this->getNodeColor($node);
+			$prev = $node;
 		}
 
 		$result['edges'] = [];
@@ -103,9 +109,20 @@ class SigmaJS extends Control
 			$result['edges'][$count]['source'] = (string) $edge->getSource()->getId();
 			$result['edges'][$count]['target'] = (string) $edge->getTarget()->getId();
 			$result['edges'][$count]['color'] = $this->getEdgeColor($edge);
+			$result['edges'][$count]['label'] = $edge->getLabel();
 		}
 
 		$this->getPresenter()->sendJson($result);
+	}
+
+
+	public function handleRedirectLabel()
+	{
+		$presenter = $this->getPresenter();
+		$label = $presenter->getParameter('label');
+		$link = $presenter->link('Graph:node', ['nodeLabel' => $label]);
+		$presenter->getPayload()->redirect = $link;
+		$presenter->sendPayload();
 	}
 
 

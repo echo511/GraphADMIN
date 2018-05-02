@@ -2,16 +2,42 @@
 
 <script type="text/javascript">
 	$(function() {
-		sigma.parsers.json({link GetData!}, {
-			container: 'sigmajs{$name|noescape}',
+
+		var sigma{$name|noescape} = new sigma({
+			renderer: {
+				container: 'sigmajs{$name|noescape}',
+				type: sigma.renderers.canvas,
+			},
 			settings: {
-				defaultNodeColor: '#ec5148',
+				defaultNodeColor: '#4286f4',
 				minNodeSize: 8,
-				maxNodeSize: 16
+				maxNodeSize: 16,
+				edgeLabelSize: 'proportional',
 			}
-		}, function(s) {
+		});
+
+		sigma{$name|noescape}.bind('doubleClickNode', function(event) {
+			var label = event.data.node.label;
+
+			$.get({link RedirectLabel!}, {
+				label: label
+			}, function(payload) {
+				window.location.href = payload.redirect;
+			});
+		});
+
+		sigma.parsers.json({link GetData!}, sigma{$name|noescape}, function(s) {
 			s.startForceAtlas2()
 		});
+
+		var drag{$name|noescape} = sigma.plugins.dragNodes(sigma{$name|noescape}, sigma{$name|noescape}.renderers[0]);
+
+		drag{$name|noescape}.bind('startdrag', function(event) {
+			sigma{$name|noescape}.stopForceAtlas2();
+		});
+		{*drag{$name|noescape}.bind('dragend', function(event) {*}
+			{*sigma{$name|noescape}.startForceAtlas2();*}
+		{*});*}
 
 	});
 </script>

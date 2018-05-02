@@ -65,10 +65,8 @@ interface IGraph
 
 	/**
 	 * Return array for sigma js parser. Give only subsection of graph.
-	 * If node is null then select random.
-	 * @return array
 	 */
-	public function sigmaJS(SigmaJS $sigmajs, INode $node = NULL, $depth = 2);
+	public function sigmaJS(SigmaJS $sigmaJS, INode $node, $depth = 2): void;
 
 
 	/**
