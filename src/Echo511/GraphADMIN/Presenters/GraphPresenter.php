@@ -31,15 +31,17 @@ class GraphPresenter extends Presenter
 	/** @var \Echo511\GraphADMIN\Facade\GraphFacade */
 	private $graphFacade;
 
+	/** @var \MySQLDump */
+	private $dumper;
 
-	/**
-	 * GraphPresenter constructor.
-	 * @param \Echo511\GraphADMIN\Facade\GraphFacade $graphFacade
-	 */
-	public function __construct(\Echo511\GraphADMIN\Facade\GraphFacade $graphFacade)
-	{
+
+	public function __construct(
+		\Echo511\GraphADMIN\Facade\GraphFacade $graphFacade,
+		\MySQLDump $dumper
+	) {
 		parent::__construct();
 		$this->graphFacade = $graphFacade;
+		$this->dumper = $dumper;
 	}
 
 
@@ -118,10 +120,10 @@ class GraphPresenter extends Presenter
 
 	public function handleExportAll()
 	{
-		$export = $this->graph->export();
-		$name = date('Y-m-d-H-i-s') . '_' . $this->getHttpRequest()->getUrl()->getHost() . '_graph-dump.' . $export['format'];
-		$content = $export['content'];
-
+		\ob_start();
+		$this->dumper->write();
+		$content = \ob_get_clean();
+		$name = date('Y-m-d-H-i-s') . '_' . $this->getHttpRequest()->getUrl()->getHost() . '_graph-dump.sql';
 		$this->getHttpResponse()->setContentType('text/plain');
 		$this->getHttpResponse()->setHeader('Content-Disposition', 'attachment; filename="' . $name . '"');
 		$this->getHttpResponse()->setHeader('Content-Length', strlen($content));
@@ -182,9 +184,13 @@ class GraphPresenter extends Presenter
 		$sigmaJS = new SigmaJS();
 		$node = $this->node ?? $this->graphFacade->getRandomNode();
 		$this->graph->sigmaJS($sigmaJS, $node, $this->sigmaJSDepth);
-		$sigmaJS->onNodeColor[] = function ($node, $formatting): void {
+		$sigmaJS->onNodeColor[] = function (INode $node, $formatting): void {
 			if (!$formatting instanceof \Echo511\GraphADMIN\Controls\Formatting) {
 				throw new \InvalidArgumentException();
+			}
+
+			if (\Nette\Utils\Strings::startsWith($node->getLabel(), 'Nc')) {
+				$formatting->setColor('#f47142');
 			}
 
 			switch ($node->getType()) {
@@ -194,6 +200,10 @@ class GraphPresenter extends Presenter
 				case 'Kloub':
 					$formatting->setColor('#926239');
 					break;
+			}
+
+			if ($node->getLabel() === $this->nodeLabel) {
+				$formatting->setColor('#f44283');
 			}
 		};
 		return $sigmaJS;

@@ -1,7 +1,7 @@
 <div id="sigmajs{$name}" class="sigmajs"></div>
 
 <script type="text/javascript">
-	$(function() {
+	$(function () {
 
 		var sigma{$name|noescape} = new sigma({
 			renderer: {
@@ -12,32 +12,38 @@
 				defaultNodeColor: '#4286f4',
 				minNodeSize: 8,
 				maxNodeSize: 16,
+				maxEdgeSize: 5,
+				minArrowSize: 15,
 				edgeLabelSize: 'proportional',
 			}
 		});
 
-		sigma{$name|noescape}.bind('doubleClickNode', function(event) {
+		sigma{$name|noescape}.bind('doubleClickNode', function (event) {
 			var label = event.data.node.label;
 
 			$.get({link RedirectLabel!}, {
 				label: label
-			}, function(payload) {
+			}, function (payload) {
 				window.location.href = payload.redirect;
 			});
 		});
 
-		sigma.parsers.json({link GetData!}, sigma{$name|noescape}, function(s) {
-			s.startForceAtlas2()
+		sigma.parsers.json({link GetData!}, sigma{$name|noescape}, function (s) {
+			s.graph.edges().forEach(function(edge){
+				edge.type = "arrow";
+			});
+			s.refresh();
+			s.startForceAtlas2();
+			// setTimeout(function () {
+			// 	s.stopForceAtlas2();
+			// }, 2000);
 		});
 
 		var drag{$name|noescape} = sigma.plugins.dragNodes(sigma{$name|noescape}, sigma{$name|noescape}.renderers[0]);
 
-		drag{$name|noescape}.bind('startdrag', function(event) {
+		drag{$name|noescape}.bind('startdrag', function (event) {
 			sigma{$name|noescape}.stopForceAtlas2();
 		});
-		{*drag{$name|noescape}.bind('dragend', function(event) {*}
-			{*sigma{$name|noescape}.startForceAtlas2();*}
-		{*});*}
 
 	});
 </script>

@@ -1,3 +1,11 @@
+parameters:
+	db:
+		host: 127.0.0.1
+		user: root
+		pass:
+		database: graph
+		port: 3306
+
 extensions:
 	graphAdmin: Echo511\GraphADMIN\DI\GraphADMINExtension
 	graphLeanMapper: Echo511\GraphADMIN\LeanMapper\DI\LeanMapperExtension
@@ -8,5 +16,15 @@ application:
 		*: Echo511\GraphADMIN\Presenters\*Presenter
 	scanDirs: false
 
+graphLeanMapper:
+	host: %db.host%
+	username: %db.user%
+	password: %db.pass%
+	database: %db.database%
+	port: %db.port%
+
 services:
 	router: Echo511\GraphADMIN\Route\RouterFactory::createRouter
+
+	dumperMysqli: mysqli(%db.host%, %db.user%, %db.pass%, %db.database%, %db.port%)
+	dumper: MySQLDump(@dumperMysqli)
