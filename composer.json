@@ -19,7 +19,8 @@
 		"latte/latte": "2.4.*",
 		"tracy/tracy": "2.4.*",
 		"tharos/leanmapper": "3.2.*",
-		"dg/mysql-dump": "^1.4"
+		"dg/mysql-dump": "^1.4",
+		"graphaware/neo4j-php-client": "^4.0"
 	},
 	"require-dev": {
 		"dg/adminer-custom": "dev-master",
