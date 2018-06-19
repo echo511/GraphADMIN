@@ -29,14 +29,10 @@
 		});
 
 		sigma.parsers.json({link GetData!}, sigma{$name|noescape}, function (s) {
-			s.graph.edges().forEach(function(edge){
-				edge.type = "arrow";
-			});
-			s.refresh();
 			s.startForceAtlas2();
-			// setTimeout(function () {
-			// 	s.stopForceAtlas2();
-			// }, 2000);
+			setTimeout(function () {
+				s.stopForceAtlas2();
+			}, 10000); // browser CPU optimization (10 s execution limit)
 		});
 
 		var drag{$name|noescape} = sigma.plugins.dragNodes(sigma{$name|noescape}, sigma{$name|noescape}.renderers[0]);

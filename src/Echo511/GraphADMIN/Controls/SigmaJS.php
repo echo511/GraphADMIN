@@ -110,6 +110,7 @@ class SigmaJS extends Control
 			$result['edges'][$count]['target'] = (string) $edge->getTarget()->getId();
 			$result['edges'][$count]['color'] = $this->getEdgeColor($edge);
 			$result['edges'][$count]['label'] = $edge->getLabel();
+			$result['edges'][$count]['type'] = 'arrow';
 		}
 
 		$this->getPresenter()->sendJson($result);
@@ -143,7 +144,7 @@ class SigmaJS extends Control
 	 */
 	private function getNodeSize(INode $node)
 	{
-		return 1;
+		return count($node->getEdges());
 	}
 
 
