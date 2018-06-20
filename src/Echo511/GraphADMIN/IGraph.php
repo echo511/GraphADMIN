@@ -19,6 +19,9 @@ interface IGraph
 	public function getNode($label);
 
 
+	public function getRandomNode();
+
+
 	/**
 	 * Try to rename node. If duplicity found do NOT merge.
 	 */

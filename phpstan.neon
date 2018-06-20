@@ -5,3 +5,4 @@ includes:
 parameters:
 	ignoreErrors:
 		- '/Parameter #1 \$data of static method LeanMapper\\Result::createInstance\(\) expects Dibi\\Row&iterable<Dibi\\Row>, array given\./'
+		- '/Method Dibi\\Fluent::from\(\) invoked with 1 parameter\, at least 2 required\./'

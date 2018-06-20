@@ -24,19 +24,19 @@
 		<div class="row">
 			<div class="node-info col-lg-4">
 				<h1><a href="#" class="node-label" data-url="{link ChangeNodeLabelOrDelete!}" data-type="text"
-					   data-pk="{$node->getId()}">{$node->getLabel()}</a></h1>
+					   data-pk="{$node->getUuid()}">{$node->getLabel()}</a></h1>
 				<div n:foreach="$node->getProperties() as $property => $value">
 					<strong>{$property|firstUpper}:</strong>
 					<br/>
 					<a href="#" class="node-label" data-url="{link ChangeNodeProperty!}" data-type="text"
-					   data-name="{$property}" data-pk="{$node->getId()}">{$value}</a>
+					   data-name="{$property}" data-pk="{$node->getUuid()}">{$value}</a>
 				</div>
 			</div>
 			<div class="node-edges col-lg-8">
 				<div n:foreach="$node->getEdges() as $edge">
 					{include #node-link, target => $edge->getSource()}
 					<a href="#" class="edge-label" data-url="{link ChangeEdgeLabelOrDelete!}" data-type="text"
-					   data-pk="{$edge->getId()}">{$edge->getLabel()}</a>
+					   data-pk="{$edge->getUuid()}">{$edge->getLabel()}</a>
 					{include #node-link, target => $edge->getTarget()}
 				</div>
 			</div>

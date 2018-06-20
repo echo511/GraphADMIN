@@ -22,20 +22,20 @@ class JsonExporter implements IExporter
 	{
 		$result = [];
 		foreach ($nodes as $node) {
-			$result['nodes'][$node->getId()]['id'] = $node->getId();
-			$result['nodes'][$node->getId()]['label'] = $node->getLabel();
-			$result['nodes'][$node->getId()]['type'] = $node->getType();
+			$result['nodes'][$node->getUuid()]['id'] = $node->getUuid();
+			$result['nodes'][$node->getUuid()]['label'] = $node->getLabel();
+			$result['nodes'][$node->getUuid()]['type'] = $node->getType();
 			foreach ($node->getProperties() as $property => $value) {
-				$result['nodes'][$node->getId()]['properties'][$property] = $value;
+				$result['nodes'][$node->getUuid()]['properties'][$property] = $value;
 			}
 		}
 
 		foreach ($edges as $edge) {
-			$result['edges'][$edge->getId()]['id'] = $edge->getId();
-			$result['edges'][$edge->getId()]['label'] = $edge->getLabel();
-			$result['edges'][$edge->getId()]['source'] = $edge->getSource()->getId();
-			$result['edges'][$edge->getId()]['target'] = $edge->getTarget()->getId();
-			$result['edges'][$edge->getId()]['type'] = $edge->getType();
+			$result['edges'][$edge->getUuid()]['id'] = $edge->getUuid();
+			$result['edges'][$edge->getUuid()]['label'] = $edge->getLabel();
+			$result['edges'][$edge->getUuid()]['source'] = $edge->getSource()->getUuid();
+			$result['edges'][$edge->getUuid()]['target'] = $edge->getTarget()->getUuid();
+			$result['edges'][$edge->getUuid()]['type'] = $edge->getType();
 		}
 		return json_encode($result);
 	}

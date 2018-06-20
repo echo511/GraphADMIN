@@ -112,8 +112,8 @@ class GraphFacade implements IGraph
 
 	public function sigmaJS(SigmaJS $sigmaJS, INode $node, $depth = 2, array & $drawnNodesIdsMap = []): void
 	{
-		if (!\array_key_exists($node->getId(), $drawnNodesIdsMap)) {
-			$drawnNodesIdsMap[$node->getId()] = TRUE;
+		if (!\array_key_exists($node->getUuid(), $drawnNodesIdsMap)) {
+			$drawnNodesIdsMap[$node->getUuid()] = TRUE;
 			$sigmaJS->drawNode($node);
 			if ($depth > 0) {
 				$sigmaJS->drawEdges($node->getEdges());

@@ -40,7 +40,7 @@ class SigmaJS extends Control
 	 */
 	public function drawNode(INode $node)
 	{
-		$this->nodes[$node->getId()] = $node;
+		$this->nodes[$node->getUuid()] = $node;
 	}
 
 
@@ -62,7 +62,7 @@ class SigmaJS extends Control
 	 */
 	public function drawEdge(IEdge $edge)
 	{
-		$this->edges[$edge->getId()] = $edge;
+		$this->edges[$edge->getUuid()] = $edge;
 	}
 
 
@@ -92,10 +92,10 @@ class SigmaJS extends Control
 		foreach ($this->nodes as $key => $node) {
 			$prev = $prev ?? $node;
 			$count++;
-			$result['nodes'][$count]['id'] = (string) $node->getId();
+			$result['nodes'][$count]['id'] = $node->getUuid();
 			$result['nodes'][$count]['label'] = $node->getLabel();
-			$result['nodes'][$count]['x'] = $node->getId();
-			$result['nodes'][$count]['y'] = $prev->getId();
+			$result['nodes'][$count]['x'] = \rand(0, 100);
+			$result['nodes'][$count]['y'] = \rand(0, 100);
 			$result['nodes'][$count]['size'] = $this->getNodeSize($node);
 			$result['nodes'][$count]['color'] = $this->getNodeColor($node);
 			$prev = $node;
@@ -105,9 +105,9 @@ class SigmaJS extends Control
 		$count = -1;
 		foreach ($this->edges as $key => $edge) {
 			$count++;
-			$result['edges'][$count]['id'] = (string) $edge->getId();
-			$result['edges'][$count]['source'] = (string) $edge->getSource()->getId();
-			$result['edges'][$count]['target'] = (string) $edge->getTarget()->getId();
+			$result['edges'][$count]['id'] = $edge->getUuid();
+			$result['edges'][$count]['source'] = $edge->getSource()->getUuid();
+			$result['edges'][$count]['target'] = $edge->getTarget()->getUuid();
 			$result['edges'][$count]['color'] = $this->getEdgeColor($edge);
 			$result['edges'][$count]['label'] = $edge->getLabel();
 			$result['edges'][$count]['type'] = 'arrow';

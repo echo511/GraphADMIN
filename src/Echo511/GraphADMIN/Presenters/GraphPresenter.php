@@ -28,7 +28,7 @@ class GraphPresenter extends Presenter
 	/** @var INode */
 	private $node;
 
-	/** @var \Echo511\GraphADMIN\Facade\GraphFacade */
+	/** @var \Echo511\GraphADMIN\IGraph */
 	private $graphFacade;
 
 	/** @var \MySQLDump */
@@ -36,7 +36,7 @@ class GraphPresenter extends Presenter
 
 
 	public function __construct(
-		\Echo511\GraphADMIN\Facade\GraphFacade $graphFacade,
+		IGraph $graphFacade,
 		\MySQLDump $dumper
 	) {
 		parent::__construct();

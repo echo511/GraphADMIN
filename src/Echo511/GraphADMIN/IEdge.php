@@ -10,8 +10,8 @@ interface IEdge
 {
 
 
-	/** @return int */
-	public function getId();
+	/** @return int|string */
+	public function getUuid();
 
 
 	/** @return INode */

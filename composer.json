@@ -20,7 +20,8 @@
 		"tracy/tracy": "2.4.*",
 		"tharos/leanmapper": "3.2.*",
 		"dg/mysql-dump": "^1.4",
-		"graphaware/neo4j-php-client": "^4.0"
+		"graphaware/neo4j-php-client": "^4.0",
+		"ramsey/uuid": "^3.7"
 	},
 	"require-dev": {
 		"dg/adminer-custom": "dev-master",

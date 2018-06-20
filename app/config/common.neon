@@ -23,8 +23,24 @@ graphLeanMapper:
 	database: %db.database%
 	port: %db.port%
 
+tracy:
+	bar:
+		- @neo4jPanel
+
 services:
 	router: Echo511\GraphADMIN\Route\RouterFactory::createRouter
 
 	dumperMysqli: mysqli(%db.host%, %db.user%, %db.pass%, %db.database%, %db.port%)
 	dumper: MySQLDump(@dumperMysqli)
+
+	neo4jPanel:
+		class: Echo511\GraphADMIN\Neo4j\Neo4jTracyPanel
+
+	neo4jBuilder:
+		class: GraphAware\Neo4j\Client\ClientBuilder
+		setup:
+			- addConnection('default', 'bolt://neo4j:password@127.0.0.1:7687')
+
+	neo4jClient:
+		class: GraphAware\Neo4j\Client\Client
+		factory: @neo4jBuilder::build()

@@ -32,7 +32,7 @@ class Node extends Entity implements INode
 	}
 
 
-	public function getId()
+	public function getUuid()
 	{
 		return $this->get('id');
 	}

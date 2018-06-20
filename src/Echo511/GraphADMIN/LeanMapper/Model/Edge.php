@@ -20,7 +20,7 @@ class Edge extends Entity implements IEdge
 {
 
 
-	public function getId()
+	public function getUuid()
 	{
 		return $this->get('id');
 	}
